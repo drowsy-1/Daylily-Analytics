@@ -9,14 +9,13 @@
 ## **WEEK 1: Foundation**
 
 ### Notebook 1: Data Exploration & Visualization (`01_data_exploration.ipynb`)
-**Since cleaning/database is complete, focus on:**
 
-- [ ] Load cleaned data and explore basic statistics
-- [ ] Create trait distribution visualizations
-- [ ] Make correlation heatmap between all 4 traits
-- [ ] Plot trait completeness by year/hybridizer
-- [ ] Generate summary statistics tables
-- [ ] Identify data quality issues or patterns
+- [x] Load cleaned data and explore basic statistics
+- [x] Identify data quality issues or patterns (attempted to rectify data issues in cleaning)
+- [x] Create trait distribution visualizations
+- [x] Make correlation heatmap between all 4 traits
+- [X] Generate summary statistics tables
+
 
 ### Notebook 2: Hybridizer Career Analysis (`02_hybridizer_analysis.ipynb`)
 
@@ -24,6 +23,9 @@
 - [ ] Calculate varieties per hybridizer over time
 - [ ] Plot hybridizer productivity trends by decade
 - [ ] Identify most prolific hybridizers
+- [ ] Measure number of unique hybridizers by year
+- [ ] Identify most prolific hybridizer by num of intros per year
+- [ ] Meausure average number of introduction per hybridizer by year and decade
 - [ ] Analyze trait improvement patterns by era
 
 **Week 1 Output:** Clean data understanding + hybridizer insights

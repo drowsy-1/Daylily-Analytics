@@ -1,0 +1,52 @@
+# Ignore all directories
+data/                     
+output/                   
+__pycache__/              
+.ipynb_checkpoints/       
+future/
+old_notebooks/
+venv/
+
+# ignore notebooks
+03_0_network_extraction.ipynb
+
+# Common data file extensions
+*.csv
+*.json
+*.xml
+*.xls
+*.dat
+*.data
+*.tsv
+*.parquet
+*.feather
+*.pkl
+*.pickle
+*.jsonl
+
+# Database files
+*.db
+*.sqlite
+*.sqlite3
+*.sql
+*.mdb
+*.accdb
+*.dbf
+
+# Binary data formats
+*.bin
+*.hdf5
+*.h5
+
+# Temporary data files
+*.tmp
+*.temp
+
+# Log files
+*.log
+
+# Environment and configuration files
+.env
+config.ini
+.venv
+venv

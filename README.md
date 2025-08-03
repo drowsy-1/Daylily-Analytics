@@ -34,7 +34,28 @@ The scraping process was broken down into two iterations, the first was to acqui
 
 The data set that was acquired had duplicates that where removed, leaving unique records of over 100,000 distinct vareities, with varying degrees of field completions which is typical of the database. 
 
-< insert fields /+ completion stats>
+Field Completion Statistics (Total Rows: 101718):
+                   Total_Values  Missing_Values Completion_Rate Data_Type
+url                      101718               0          100.0%    object
+name                     101718               0          100.0%    object
+hybridizer               101718               0          100.0%    object
+year                     101718               0          100.0%     int64
+color_description        101667              51          99.95%    object
+scape_height             101366             352          99.65%    object
+bloom_season             100980             738          99.27%    object
+ploidy                    99952            1766          98.26%    object
+foliage_type              99407            2311          97.73%    object
+parentage                 97793            3925          96.14%    object
+bloom_habit               95828            5890          94.21%    object
+bloom_size                93814            7904          92.23%    object
+seedling_#                87579           14139           86.1%    object
+image_url                 68696           33022          67.54%    object
+branches                  53572           48146          52.67%   float64
+bud_count                 53437           48281          52.53%   float64
+fragrance                 33338           68380          32.77%    object
+form                      12940           88778          12.72%    object
+notes                      3181           98537           3.13%    object
+sculpting                  1087          100631           1.07%    object
 
 ### Exploratory Data Analysis
 

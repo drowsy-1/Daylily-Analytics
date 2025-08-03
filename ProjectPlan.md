@@ -19,38 +19,51 @@
 
 ### Notebook 2: Hybridizer Career Analysis (`02_hybridizer_analysis.ipynb`)
 
-- [ ] Extract hybridizer career spans (first/last introduction years)
-- [ ] Calculate varieties per hybridizer over time
-- [ ] Plot hybridizer productivity trends by decade
-- [ ] Identify most prolific hybridizers
-- [ ] Measure number of unique hybridizers by year
-- [ ] Identify most prolific hybridizer by num of intros per year
-- [ ] Meausure average number of introduction per hybridizer by year and decade
-- [ ] Analyze trait improvement patterns by era
+- [x] Extract hybridizer career spans (first/last introduction years)
+- [x] Calculate varieties per hybridizer over time
+- [x] Plot hybridizer productivity trends by decade
+- [x] Identify most prolific hybridizers
+- [x] Measure number of unique hybridizers by year
+- [x] Identify most prolific hybridizer by num of intros per year
+- [x] Meausure average number of introduction per hybridizer by year and decade
+
+### Notebook 2.5 **[STRETCH]** : Visualize Trait values Over Time (`02_5_visualize_traits.ipynb`)
+
+- [ ] Visulaize trait distributions over time 
 
 **Week 1 Output:** Clean data understanding + hybridizer insights
+
 
 ---
 
 ## **WEEK 2: Breeding Values (CORE DELIVERABLE)**
 
-### Notebook 3: Statistical Breeding Values (`03_breeding_values.ipynb`)
+### Notebook 3.0: Network Extraction (`03_0_network_extraction.ipynb`)
 
-- [ ] Build parent-child relationship dataframe
+- [x] extract parent-child relationships
+
+### Notebook 3: Network Analysis (`03_network_analysis.ipynb`)
+
+- [x] Calculate centrality measures (PageRank, betweenness, degree, katz)
+- [ ] Combine network influence with breeding values?
+- [ ] **[STRETCH]** Add PCA analysis of trait relationships
+- [0] Identify "bridge varieties" connecting breeding lines (decided community detection wasn't as useful given structure and inbreeding)
+
+### Notebook 4: Regional Data (`04_regional_data.ipynb`)
+
+- [ ] import and read in regional data for hybridizers
+
+
+### Notebook 5: Statistical Breeding Values (`05_breeding_values.ipynb`)
+
 - [ ] Calculate population means for each trait
 - [ ] For each parent: measure offspring trait improvement(change) vs. population/+ parent
 - [ ] Calculate breeding values using regression methods (build on your existing work)
 - [ ] Apply custom trait weights (40% branches, 30% height, 20% bloom, 10% buds) - (for my specific goals)
 - [ ] Create composite breeding value ranking
 - [ ] Export ranked list of varieties for breeding recommendations
-
-### Notebook 4: Network Analysis (`04_network_analysis.ipynb`)
-
-- [ ] Create network graph object from parent-child relationships
-- [ ] Calculate centrality measures (PageRank, betweenness, degree, katz)
 - [ ] Combine network influence with breeding values?
-- [ ] **[STRETCH]** Add PCA analysis of trait relationships
-- [ ] Identify "bridge varieties" connecting breeding lines
+
 
 **Week 2 Output:** Ranked list of best breeding varieties
 

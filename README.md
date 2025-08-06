@@ -1,5 +1,3 @@
-=============================================================================================================
-**---------------------------------------------------------------------------------------------------------**
 # Daylily Data Science Portfolio
 
 ## Project Overview
@@ -248,7 +246,6 @@ The project culminates in a master database combining:
 
 ## Project Structure
 
-```
 ├── 01_data_exploration.ipynb      # EDA and data cleaning
 ├── 02_hybridizer_analysis.ipynb   # Career pattern analysis  
 ├── 03_0 netowrk_extraction.ipynb  # Indentifies Parent-Child relationships (not included)
@@ -265,13 +262,215 @@ The project culminates in a master database combining:
 ├── regional_data.xlsx             # ADS regional information
 └── requirements.txt               # Project dependancies 
 
-```
+---
+
+## Data Structure
+
+============================================================
+DATA: COLUMN TYPES AND COMPLETENESS
+============================================================
+
+
+RAW DAYLILIES.JSONL ANALYSIS (before cleaning)
+Total Records: 102,611
+--------------------------------------------------
++-------------------+-------------+----------------+
+| Column Name       | Data Type   | Completeness   |
++===================+=============+================+
+| url               | string      | 100.00%        |
++-------------------+-------------+----------------+
+| scraped_at        | string      | 100.00%        |
++-------------------+-------------+----------------+
+| name              | string      | 100.00%        |
++-------------------+-------------+----------------+
+| hybridizer        | string      | 100.00%        |
++-------------------+-------------+----------------+
+| year              | string      | 100.00%        |
++-------------------+-------------+----------------+
+| scape_height      | string      | 99.66%         |
++-------------------+-------------+----------------+
+| bloom_size        | string      | 92.24%         |
++-------------------+-------------+----------------+
+| bloom_season      | string      | 99.28%         |
++-------------------+-------------+----------------+
+| ploidy            | string      | 98.27%         |
++-------------------+-------------+----------------+
+| foliage_type      | string      | 97.74%         |
++-------------------+-------------+----------------+
+| fragrance         | string      | 32.67%         |
++-------------------+-------------+----------------+
+| bloom_habit       | string      | 94.22%         |
++-------------------+-------------+----------------+
+| bud_count         | string      | 52.62%         |
++-------------------+-------------+----------------+
+| branches          | string      | 52.75%         |
++-------------------+-------------+----------------+
+| seedling_#        | string      | 86.14%         |
++-------------------+-------------+----------------+
+| color_description | string      | 99.95%         |
++-------------------+-------------+----------------+
+| parentage         | string      | 96.17%         |
++-------------------+-------------+----------------+
+| image_url         | string      | 67.56%         |
++-------------------+-------------+----------------+
+| form              | string      | 12.72%         |
++-------------------+-------------+----------------+
+| sculpting         | string      | 1.08%          |
++-------------------+-------------+----------------+
+| notes             | string      | 3.12%          |
++-------------------+-------------+----------------+
+
+REGIONAL FILE ANALYSIS
+NAME: Hemerocallis-Hybridizer-Registrant-List_Through-2024.xlsx
+Total Records: 5,562
+--------------------------------------------------
++-------------------+-------------+----------------+
+| Column Name       | Data Type   | Completeness   |
++===================+=============+================+
+| ABBREVIATION CODE | string      | 100.00%        |
++-------------------+-------------+----------------+
+| Garden Name       | string      | 43.20%         |
++-------------------+-------------+----------------+
+| Region            | float       | 99.84%         |
++-------------------+-------------+----------------+
+| Name              | string      | 99.98%         |
++-------------------+-------------+----------------+
+| Deceased          | string      | 88.21%         |
++-------------------+-------------+----------------+
+| Address           | string      | 99.82%         |
++-------------------+-------------+----------------+
+| City              | string      | 99.80%         |
++-------------------+-------------+----------------+
+| State             | string      | 93.98%         |
++-------------------+-------------+----------------+
+| Country           | string      | 11.27%         |
++-------------------+-------------+----------------+
+| Zip               | string      | 86.91%         |
++-------------------+-------------+----------------+
+| Region.1          | string      | 24.06%         |
++-------------------+-------------+----------------+
+| Name.1            | string      | 24.38%         |
++-------------------+-------------+----------------+
+| Deceased.1        | string      | 9.64%          |
++-------------------+-------------+----------------+
+| Address.1         | string      | 24.34%         |
++-------------------+-------------+----------------+
+| City.1            | string      | 24.07%         |
++-------------------+-------------+----------------+
+| State.1           | string      | 22.96%         |
++-------------------+-------------+----------------+
+| Country.1         | string      | 2.05%          |
++-------------------+-------------+----------------+
+| Zip.1             | string      | 22.01%         |
++-------------------+-------------+----------------+
+| Date              | string      | 16.85%         |
++-------------------+-------------+----------------+
+| Notes             | string      | 24.33%         |
++-------------------+-------------+----------------+
+| Unnamed: 20       | string      | 0.04%          |
++-------------------+-------------+----------------+
+| Unnamed: 21       | string      | 0.02%          |
++-------------------+-------------+----------------+
+| Unnamed: 22       | string      | 0.02%          |
++-------------------+-------------+----------------+
+| Unnamed: 23       | string      | 0.02%          |
++-------------------+-------------+----------------+
+| Unnamed: 24       | string      | 0.02%          |
++-------------------+-------------+----------------+
+| Unnamed: 25       | string      | 0.02%          |
++-------------------+-------------+----------------+
+
+
+FINAL MASTER DAYLILY TABLE
+Total Records: 101,446
+--------------------------------------------------
++-------------------------+-------------+----------------+
+| Column Name             | Data Type   | Completeness   |
++=========================+=============+================+
+| url                     | string      | 100.00%        |
++-------------------------+-------------+----------------+
+| name                    | string      | 100.00%        |
++-------------------------+-------------+----------------+
+| hybridizer              | string      | 99.99%         |
++-------------------------+-------------+----------------+
+| year                    | integer     | 100.00%        |
++-------------------------+-------------+----------------+
+| scape_height            | float       | 99.64%         |
++-------------------------+-------------+----------------+
+| bloom_size              | float       | 92.20%         |
++-------------------------+-------------+----------------+
+| bloom_season            | string      | 99.23%         |
++-------------------------+-------------+----------------+
+| ploidy                  | string      | 98.27%         |
++-------------------------+-------------+----------------+
+| foliage_type            | string      | 97.73%         |
++-------------------------+-------------+----------------+
+| fragrance               | string      | 32.78%         |
++-------------------------+-------------+----------------+
+| bloom_habit             | string      | 94.20%         |
++-------------------------+-------------+----------------+
+| bud_count               | float       | 52.37%         |
++-------------------------+-------------+----------------+
+| branches                | float       | 52.47%         |
++-------------------------+-------------+----------------+
+| seedling_num            | string      | 86.00%         |
++-------------------------+-------------+----------------+
+| color_description       | string      | 99.95%         |
++-------------------------+-------------+----------------+
+| parentage               | string      | 78.55%         |
++-------------------------+-------------+----------------+
+| image_url               | string      | 67.43%         |
++-------------------------+-------------+----------------+
+| form                    | string      | 12.72%         |
++-------------------------+-------------+----------------+
+| sculpting               | string      | 1.07%          |
++-------------------------+-------------+----------------+
+| notes                   | string      | 3.14%          |
++-------------------------+-------------+----------------+
+| rebloom                 | integer     | 100.00%        |
++-------------------------+-------------+----------------+
+| Region                  | float       | 99.30%         |
++-------------------------+-------------+----------------+
+| primary_hybridizer      | string      | 99.30%         |
++-------------------------+-------------+----------------+
+| City                    | string      | 99.26%         |
++-------------------------+-------------+----------------+
+| State                   | string      | 94.33%         |
++-------------------------+-------------+----------------+
+| Country                 | string      | 99.29%         |
++-------------------------+-------------+----------------+
+| Direct_Children         | float       | 74.97%         |
++-------------------------+-------------+----------------+
+| Total_Descendants       | float       | 74.97%         |
++-------------------------+-------------+----------------+
+| Avg_Generation_Impact   | float       | 74.97%         |
++-------------------------+-------------+----------------+
+| Descendant_Success_Rate | float       | 74.97%         |
++-------------------------+-------------+----------------+
+| Breeding_Span           | float       | 74.97%         |
++-------------------------+-------------+----------------+
+| Yearly_Impact           | float       | 74.97%         |
++-------------------------+-------------+----------------+
+| In_Degree_Centrality    | float       | 74.97%         |
++-------------------------+-------------+----------------+
+| Out_Degree_Centrality   | float       | 74.97%         |
++-------------------------+-------------+----------------+
+| PageRank                | float       | 74.97%         |
++-------------------------+-------------+----------------+
+| Katz_Centrality         | float       | 74.97%         |
++-------------------------+-------------+----------------+
+| Betweenness_Centrality  | float       | 74.97%         |
++-------------------------+-------------+----------------+
+| parents                 | string      | 68.59%         |
++-------------------------+-------------+----------------+
+| children                | string      | 24.79%         |
++-------------------------+-------------+----------------+
 
 ---
 
 ## Impact & Applications
 
-This analysis represents the first comprehensive data-driven approach to daylily breeding optimization. The insights provide:
+This analysis represents the first data-driven approach to daylily breeding optimization. The insights provide:
 
 - **Strategic Breeding**: Data-backed parent selection methodology
 - **Career Guidance**: Evidence-based development paths for hybridizers  
@@ -279,11 +478,65 @@ This analysis represents the first comprehensive data-driven approach to daylily
 - **Genetic Preservation**: Identification of historically valuable genetics
 - **Innovation Foundation**: Platform for advanced breeding technologies
 
-The project demonstrates how data science can transform traditional agricultural practices, providing a template for similar analyses in other plant breeding communities.
+*The project showcases the power of combining modern data science techniques with traditional horticultural & agricultural practices, to unlock insights that were previously impossible to discover, providing a template for similar analyses in other plant breeding communities.*
 
 ---
 
-*This project showcases the power of combining traditional horticultural knowledge with modern data science techniques to unlock insights that were previously impossible to discover.*
+# Project Setup Instructions
 
-**---------------------------------------------------------------------------------------------------------**
-=============================================================================================================
+## Repository Setup
+
+1. Clone the repository
+```bash
+git clone https://github.com/drowsy-1/Daylily-Analytics.git
+cd Daylily-Analytics
+```
+
+2. Set up Python environment
+It's recommended to use a virtual environment:
+```bash
+python -m venv venv
+source venv/bin/activate  # On Windows use: venv\Scripts\activate
+```
+
+3. Install dependencies
+```bash
+pip install -r requirements.txt
+```
+
+## Notebook Structure
+
+This repository contains a series of Jupyter notebooks numbered from 01 to 05. There is also an additional notebook (03_0) which is a supplementary notebook to notebook 03.
+
+The notebooks should be run in numerical order:
+- 01_data_exploration.ipynb
+- 02_hybridizer_analysis.ipynb
+- 03_0_network_extraction.ipynb (supplementary to notebook 03 not included)
+- 03_network_analysis.ipynb
+- 04_regional_data.ipynb
+- 05_merge.ipynb
+
+## Running the Notebooks
+
+1. After activating your virtual environment, start Jupyter:
+```bash
+jupyter notebook
+```
+
+2. Your browser will open automatically. If not, copy the URL shown in your terminal.
+
+3. Navigate through the notebooks in order, running each cell sequentially. (01 -> 05)
+
+## Important Notes
+
+- Make sure to run the notebooks in the specified order as they have dependencies on previous notebooks
+- Notebook 03_0 is essential to notebook 03 and must be run before notebook 03
+- Each notebook should indicate any specific prerequisites at its beginning in the imports
+
+## Troubleshooting
+
+If you encounter any issues:
+1. Ensure all dependencies are installed correctly
+2. Verify that you're using the correct Python version
+3. Try restarting the Jupyter kernel if you encounter any memory issues
+4. Make sure to run all cells in each notebook in sequence

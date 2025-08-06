@@ -246,6 +246,8 @@ The project culminates in a master database combining:
 
 ## Project Structure
 
+```python
+
 ├── 01_data_exploration.ipynb      # EDA and data cleaning
 ├── 02_hybridizer_analysis.ipynb   # Career pattern analysis  
 ├── 03_0 netowrk_extraction.ipynb  # Indentifies Parent-Child relationships (not included)
@@ -261,10 +263,13 @@ The project culminates in a master database combining:
 ├── README.md                      # This documentation
 ├── regional_data.xlsx             # ADS regional information
 └── requirements.txt               # Project dependancies 
+```
 
 ---
 
 ## Data Structure
+
+```python
 
 ============================================================
 DATA: COLUMN TYPES AND COMPLETENESS
@@ -465,6 +470,8 @@ Total Records: 101,446
 +-------------------------+-------------+----------------+
 | children                | string      | 24.79%         |
 +-------------------------+-------------+----------------+
+
+```
 
 ---
 

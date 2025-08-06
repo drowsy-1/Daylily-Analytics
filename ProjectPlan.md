@@ -6,7 +6,7 @@
 
 ---
 
-## **WEEK 1: Foundation**
+## **PART 1: Foundation**
 
 ### Notebook 1: Data Exploration & Visualization (`01_data_exploration.ipynb`)
 
@@ -31,30 +31,46 @@
 
 - [ ] Visulaize trait distributions over time 
 
-**Week 1 Output:** Clean data understanding + hybridizer insights
+**Part 1 Output:** Clean data understanding + hybridizer insights
 
 
 ---
 
-## **WEEK 2: Breeding Values (CORE DELIVERABLE)**
+## **Part 2: Breeding Values (CORE DELIVERABLE)**
 
 ### Notebook 3.0: Network Extraction (`03_0_network_extraction.ipynb`)
 
-- [x] extract parent-child relationships
+- [x] extract parent-child relationships(not published)
 
 ### Notebook 3: Network Analysis (`03_network_analysis.ipynb`)
 
 - [x] Calculate centrality measures (PageRank, betweenness, degree, katz)
-- [ ] Combine network influence with breeding values?
+- [0] Combine network influence with breeding values?
 - [ ] **[STRETCH]** Add PCA analysis of trait relationships
 - [0] Identify "bridge varieties" connecting breeding lines (decided community detection wasn't as useful given structure and inbreeding)
 
 ### Notebook 4: Regional Data (`04_regional_data.ipynb`)
 
-- [ ] import and read in regional data for hybridizers
+- [x] import and read in regional data for hybridizers
 
+### Notebook 5: Merging Data (`05_Merge.ipynb`)
 
-### Notebook 5: Statistical Breeding Values (`05_breeding_values.ipynb`)
+- [x] Combine all generated tables into a master table
+- [x] Use 3 SQL merges
+- [x] Parse Parent Child Relationships table to add parents and offspring columns
+- [x] Save and export master table 
+
+### Project Polish
+
+- [ ] Clean up all notebook code and add documentation
+- [ ] Create comprehensive README with setup instructions
+- [ ] Add requirements.txt file
+- [ ] Write project summary and insights
+- [ ] **[STRETCH]** Create simple interactive dashboard
+
+--- **END OF CURRENT PROGRESS** ---
+
+### Notebook 8: Statistical Breeding Values (`08_breeding_values.ipynb`)
 
 - [ ] Calculate population means for each trait
 - [ ] For each parent: measure offspring trait improvement(change) vs. population/+ parent
@@ -65,13 +81,13 @@
 - [ ] Combine network influence with breeding values?
 
 
-**Week 2 Output:** Ranked list of best breeding varieties
+**Part 2 Output:** Ranked list of best breeding varieties
 
 ---
 
-## **WEEK 3: Analysis & Recommendations**
+## **PART 3: Analysis & Recommendations**
 
-### Notebook 5: Breeding Recommendations (`05_recommendations.ipynb`)
+### Notebook 5: Breeding Recommendations (`09_recommendations.ipynb`)
 
 - [ ] Create final ranked breeding lists:
   - Top 25 overall varieties (composite breeding value)
@@ -80,12 +96,7 @@
 - [ ] Generate actionable breeding advice
 - [ ] **[STRETCH]** Simple cross recommendations (high × high value pairings)
 
-### Required Visualizations (3 different types):
-- [ ] **Scatter plot:** Breeding value vs. network centrality
-- [ ] **Heatmap:** Trait correlations or breeding value matrix
-- [ ] **Network plot:** Key breeding varieties and connections
-
-**Week 3 Output:** Final breeding recommendations
+**Part 3 Output:** Final breeding recommendations
 
 ---
 
@@ -144,17 +155,17 @@ def extract_parent_relationships(parentage_series: pd.Series) -> pd.DataFrame:
 ## **Success Checklist**
 
 ### **Minimum Viable Project (Capstone Requirements):**
-- [ ] atleast 3 unique graphs and visualizations 
-- [ ] SQLite database with multiple tables 
-- [ ] SQL joins between tables
-- [ ] 3 different visualization types
+- [x] atleast 3 unique graphs and visualizations 
+- [x] SQLite database with multiple tables 
+- [x] SQL joins between tables
+- [x] 3 different visualization types
 - [ ] 3+ custom functions with type hints and docstrings
-- [ ] Feature engineering (breeding values)
-- [ ] Clean, organized code structure
+- [x] Feature engineering (breeding values) (went with centrality)
+- [x] Clean, organized code structure
 
 ### **Career Portfolio Goals:**
 - [ ] Actionable breeding variety rankings
-- [ ] Novel insights not available elsewhere
+- [x] Novel insights not available elsewhere
 - [ ] Professional documentation and presentation
 - [ ] Demonstrates advanced statistical methods
 
@@ -164,11 +175,3 @@ def extract_parent_relationships(parentage_series: pd.Series) -> pd.DataFrame:
 - [ ] Queryable database for future breeding decisions
 
 ---
-
-## **Daily Workflow**
-- **Days 1-2:** Complete Week 1 notebooks
-- **Days 3-5:** Core breeding value analysis (Week 2)
-- **Days 6-8:** Network analysis and recommendations (Week 2-3)
-- **Days 9-11:** Final recommendations and visualizations (Week 3)
-- **Days 12-14:** Integration and polish (Week 4)
-- **Days 15-21:** Buffer week for stretch goals and refinement

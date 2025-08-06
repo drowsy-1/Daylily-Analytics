@@ -6,6 +6,8 @@ __pycache__/
 future/
 old_notebooks/
 venv/
+.DS_Store
+DS_Store
 
 # ignore notebooks
 03_0_network_extraction.ipynb

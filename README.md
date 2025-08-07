@@ -34,10 +34,7 @@ Raw Database → Cleaning → Relationship Extraction → Network Analysis → G
 ## Core Analysis Components
 
 |---------------------------------------------------------|
-| Analysis Type                                           |
-| Method                                                  |
-| Rationale                                               | 
-| Key Limitation                                          |
+| Analysis Type > Method > Rationale > Key Limitations    |
 |---------------------------------------------------------|
  **Data Cleaning** 
 | IQR outlier detection, manual validation                |

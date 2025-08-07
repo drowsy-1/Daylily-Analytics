@@ -32,28 +32,34 @@ Due to database access limitations, I developed a custom web scraping solution. 
 Raw Database → Cleaning → Relationship Extraction → Network Analysis → Geographic Enrichment → Master Dataset
 
 ## Core Analysis Components
-
+```
 | Analysis Type                                           |
 | Method                                                  |
 | Rationale                                               | 
 | Key Limitation                                          |
 |---------------------------------------------------------|
+
  **Data Cleaning** 
 | IQR outlier detection, manual validation                |
 | Preserves integrity while removing impossible values    | 
 | Some subjective decisions required                      |
+
  **Relationship Extraction** 
 | Pattern matching on parentage strings                   | 
 | Only method available for unstructured text             | 
 | Multiple parents complicate modeling                    |
+
  **Network Analysis** 
 | Multiple centrality measures                            |
 | Captures breeding influence from different perspectives |
 | High density limits community detection                 |
+
 **Geographic Integration** 
 | Region mapping via abbreviation codes                   | 
 | Enables climate/regional breeding analysis              | 
 | Missing data for some hybridizers                       |
+
+```
 
 ### Notebook Structure
 1. **Data Exploration & Quality** (01): Statistical distributions, missing data analysis, database normalization

@@ -10,9 +10,7 @@ venv/
 DS_Store
 
 # ignore notebooks
-03_0_network_extraction.ipynb
-06_pedigree_reading.ipynb
-07_v3_bayes_a_matrix.ipynb
+
 
 # Common data file extensions
 *.csv

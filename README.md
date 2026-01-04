@@ -1,488 +1,342 @@
-# Daylily Data Science Portfolio
+# Daylily Breeding Value Analysis
 
-## Overview
+A data science portfolio project analyzing 100,000+ daylily varieties to identify which plants make the best breeding parents.
 
-This data science project analyzes over 100,000 daylily varieties from the American Daylily Society database to uncover breeding patterns, hybridizer career trajectories, and network relationships through advanced pedigree reconstruction and statistical breeding value estimation.
+![Breeding Value Analysis Results](outputs/breeding_value_analysis_results.png)
 
-**Project Evolution:** What began as database preprocessing has evolved into a analytical pipeline implementing Bayesian breeding value prediction - demonstrating data engineering, algorithm development, and statistical modeling capabilities.
+## Quick Summary
 
-**Repository Structure:** Core pipeline (01-05) and breeding value methodology (07) are public. Advanced pedigree reconstruction algorithms (06) and complete datasets remain private for intellectual property considerations.
+| Metric | Value |
+|--------|-------|
+| **Varieties Analyzed** | 101,718 |
+| **Parent-Child Relationships** | 138,352 |
+| **Unique Hybridizers** | 5,334 |
+| **Time Span** | 1763-2024 (260 years) |
+| **Predictive Accuracy (Bloom Size)** | R²=0.33, r=0.61 |
 
----
-
-## Table of Contents
-- [Primary Goal](#primary-goal)
-- [The Problem](#the-problem)
-- [Technical Approach](#technical-approach)
-- [Core Analysis Components](#core-analysis-components)
-- [Key Findings](#key-findings)
-- [Impact & Applications](#impact--applications)
-- [Future Research Directions](#future-research-directions)
-- [Project Setup](#project-setup)
-- [Repository Structure & Access](#repository-structure--access)
-- [Current Status & Limitations](#current-status--limitations)
+**Key Achievement**: Built a breeding value estimation system that successfully predicts offspring bloom size and scape height from parent genetics, validated on 12,800+ post-2012 varieties.
 
 ---
 
-## Primary Goal
+## The Problem
 
-Transform the American Daylily Society's dataset into a comprehensive, analysis-ready dataset that enables statistical breeding value calculations through Bayesian methods and hierarchical modeling.
+With 100,000+ registered daylily varieties, hybridizers face an overwhelming selection challenge. Most rely on intuition, aesthetics, or word-of-mouth. But which varieties *actually* produce superior offspring?
 
-### The Problem
-
-With 100 years of intensive hybridization resulting in over 102,000 registered daylily varieties, collectors and hybridizers face an overwhelming selection challenge. Current breeding strategies range from award-focused selection to opportunistic crossing of "pretty flowers." 
-
-**The Gap**: No data-driven techniques exist beyond simple filtering, leaving significant potential for improving breeding outcomes through statistical analysis and network-based insights.
-
-### Why This Approach?
-
-This project creates the first structured dataset enabling statistical analysis of breeding success patterns and implements quantitative genetic methods to estimate breeding values - moving beyond preprocessing to deliver actionable breeding intelligence.
+**This project answers that question with data.**
 
 ---
 
-## Technical Approach
+## What I Built
 
-### Data Acquisition
+### End-to-End Data Pipeline
 
-**Source**: American Daylily Society database (https://daylilies.org/)  
-**Scale**: 101,718 unique varieties spanning 1763-2024  
-**Completeness**: Varies by field (100% for core data, 1.07% for specialized traits)
+```
+Raw Database (102K varieties)
+    ↓
+Data Cleaning & Validation (Notebook 01)
+    ↓
+Exploratory Analysis (Notebooks 02, 02.5)
+    ↓
+Pedigree Network Extraction (Notebook 03_0) ← Proprietary algorithm
+    ↓
+Network Influence Metrics (Notebook 03)
+    ↓
+Geographic Enrichment (Notebook 04)
+    ↓
+Master Database Integration (Notebook 05)
+    ↓
+Breeding Value Estimation & Validation (Notebook 06)
+```
 
-Due to database access limitations, I developed a custom web scraping solution. The scraping was conducted ethically during nighttime hours with low bandwidth queries: 3-4 nights for text data, 3 additional nights for images (~4GB total). This approach produced a nearly complete and consistent dataset ready for analysis.
+### Core Technical Components
 
-### Technical Stack
+| Component | Method | Key Result |
+|-----------|--------|------------|
+| **Data Cleaning** | IQR outlier detection, deduplication | 893 duplicates removed, 312 temporal outliers filtered |
+| **Pedigree Parsing** | Custom AST algorithm | 99.95% success rate (53/101,446 failures) |
+| **Network Analysis** | PageRank, betweenness, Katz centrality | 76,449 nodes, 138,352 edges mapped |
+| **Breeding Values** | Offspring performance vs. population mean | 15,187 parents evaluated across 4 traits |
+| **Validation** | Temporal train/test split (pre/post 2012) | Bloom size R²=0.33, height R²=0.14 |
 
+---
+
+## Results
+
+### What Works: Validated Predictions
+
+The temporal validation (train on pre-2012, test on post-2012) revealed meaningful predictive power for two traits:
+
+| Trait | R² | Correlation | Test Samples | Verdict |
+|-------|-----|-------------|--------------|---------|
+| **Bloom Size** | 0.334 | 0.605 | 12,800 | Strong - use with confidence |
+| **Scape Height** | 0.139 | 0.436 | 12,826 | Moderate - use as guidance |
+| Branches | -0.153 | 0.123 | 11,485 | Poor - model doesn't help |
+| Bud Count | -0.403 | 0.128 | 11,448 | Poor - model doesn't help |
+
+**Interpretation**: For bloom size and height, knowing a parent's breeding value genuinely predicts offspring performance. For branches and bud count, data sparsity (53% completeness) undermines predictive power.
+
+### Top Breeding Parents by Trait
+
+**Bloom Size** (offspring avg vs population):
+1. Linguini (+3.49 std devs, 10 offspring)
+2. Donnie Joe Cole (+3.45 std devs, 16 offspring)
+3. Wild and Free (+3.17 std devs, 13 offspring)
+
+**Scape Height**:
+1. Notify Ground Crew (+3.96 std devs, 17 offspring)
+2. Challenger (+3.46 std devs, 9 offspring)
+3. B.J. McMillen (+3.09 std devs, 20 offspring)
+
+**Multi-Trait Improvers** (balanced index):
+1. Linguini (Index +2.07)
+2. Moonbeam (Index +1.91)
+3. Stick Figure (Index +1.83)
+
+### Data Quality Assessment
+
+![Data Quality Dashboard](outputs/data_quality_dashboard.png)
+
+---
+
+## Technical Skills Demonstrated
+
+### Data Engineering
+- Web scraping with ethical rate limiting (3-4 nights, low bandwidth)
+- Deduplication and outlier detection (IQR method with domain validation)
+- Multi-format export (SQLite, CSV, JSON, JSONL)
+- Complex SQL joins with GROUP_CONCAT aggregations
+
+### Statistical Analysis
+- Effect size estimation (Cohen's d standardization)
+- Hypothesis testing with reliability weighting
+- Temporal train/test validation (avoiding data leakage)
+- Correlation and distribution analysis
+
+### Network Analysis
+- Graph construction from NLP-extracted relationships
+- Multiple centrality measures (PageRank, betweenness, degree, Katz)
+- Large-scale graph processing (76K+ nodes)
+- Export to GraphML, GEXF, Pickle formats
+
+### Quantitative Genetics Concepts
+- Breeding value = (offspring_mean - population_mean) / population_std
+- Reliability scoring: statistical confidence × sample adequacy
+- Multi-trait selection indices with customizable weights
+- Transmitting ability concepts (TA = BV/2)
+
+### Tools & Libraries
 - **Languages**: Python, SQL
-- **Core Libraries**: pandas, numpy, scipy, networkx, igraph
-- **Statistical Modeling**: PyMC 5.x (Bayesian inference, MCMC sampling)
+- **Data**: pandas, numpy, scipy
+- **Networks**: NetworkX, igraph
 - **Visualization**: matplotlib, seaborn
-- **Database**: SQLite for structured storage and joins
-- **Environment**: Jupyter notebooks for reproducible analysis
+- **Database**: SQLite3
+- **Environment**: Jupyter notebooks
 
-### Data Pipeline
+---
+
+## Project Structure
 
 ```
-Raw Database → Cleaning → Relationship Extraction → Network Analysis → 
-Geographic Enrichment → Master Dataset → Pedigree Reconstruction → Breeding Value Estimation
+A1_DataSci_Portfolio/
+├── Notebooks (Runnable Pipeline)
+│   ├── 01_data_exploration.ipynb      # EDA, cleaning, validation
+│   ├── 02_hybridizer_analysis.ipynb   # Career trajectories, community trends
+│   ├── 02_5_variety_exploration.ipynb # Trait trends over time
+│   ├── 03_0_network_extraction.ipynb  # Pedigree parsing (simplified)
+│   ├── 03_network_analysis.ipynb      # Centrality metrics, influence
+│   ├── 04_regional_data.ipynb         # Geographic enrichment
+│   ├── 05_merge.ipynb                 # Master database creation
+│   └── 06_breeding_values.ipynb       # Core analysis & validation
+│
+├── Data Files
+│   ├── daylilies.db                   # SQLite database (138 MB)
+│   ├── daylilies.jsonl                # Raw scraped data (60 MB)
+│   └── data/
+│       ├── master_daylily.csv         # Integrated dataset (48 MB)
+│       ├── daylily_parent_child_network.csv
+│       └── breeding_values_*.csv      # Per-trait results
+│
+├── Outputs
+│   ├── breeding_value_analysis_results.png
+│   ├── data_quality_dashboard.png
+│   └── selection_index_*.csv          # Multi-trait rankings
+│
+└── Documentation
+    ├── README.md
+    └── requirements.txt
 ```
 
 ---
 
-## Core Analysis Components
+## Limitations & Honest Assessment
 
-### Phase 1: Foundation Pipeline (Notebooks 01-05)
+### What's Not Included (IP Considerations)
 
-| Analysis Type | Method | Rationale | Key Limitations |
-|---------------|--------|-----------|-----------------|
-| **Data Cleaning** | IQR outlier detection, manual validation | Preserves integrity while removing impossible values | Some subjective decisions required |
-| **Relationship Extraction** | Pattern matching on parentage strings | Only method available for unstructured text | Multiple parents complicate modeling |
-| **Network Analysis** | Multiple centrality measures | Captures breeding influence from different perspectives | High density limits community detection |
-| **Geographic Integration** | Region mapping via abbreviation codes | Enables climate/regional breeding analysis | Missing data for some hybridizers |
+**Pedigree Parsing Algorithm**: Notebook `03_0_network_extraction.ipynb` contains a simplified version. The full AST-based parser that achieves 99.95% accuracy on complex nested pedigrees like `((A × B) × C) × (D × E)` is proprietary. The algorithm:
+- Handles 13,042 "unknown" entries with unique identity assignment
+- Resolves 26,858 "seedling" entries to prevent network collapse
+- Differentiates maternal/paternal parent roles
 
-**Notebook Structure (Phase 1):**
-1. **Data Exploration & Quality** (01): Statistical distributions, missing data analysis, database normalization
-2. **Hybridizer Career Analysis** (02): Community trends and productivity patterns  
-3. **Network Extraction & Analysis** (03): Parent-child relationship extraction and centrality calculations
-4. **Regional Data Integration** (04): Geographic breeding pattern analysis
-5. **Master Database Creation** (05): Comprehensive data fusion via SQL joins
+**Raw Data Sources**: Original scraped database and some intermediate files excluded to respect data provenance considerations.
 
----
+*Full implementation available to potential employers upon request during interview processes.*
 
-### Phase 2: Advanced Analysis (Notebooks 06-07)
+### Data Quality Constraints
 
-#### Notebook 06: Enhanced Pedigree Reconstruction (Private)
+| Issue | Impact | Mitigation |
+|-------|--------|------------|
+| **11% of varieties show 3+ parents** | NLP extraction artifacts (biologically impossible) | Evaluate parents on ALL offspring; noise averages out |
+| **Branches/bud count 53% complete** | Insufficient data for reliable predictions | Focus guidance on bloom size and height |
+| **Registration bias** | Only top 1-5% of seedlings registered | Use for relative ranking, not absolute prediction |
+| **No controlled experiments** | Observational data with confounds | Validated with temporal split; acknowledge uncertainty |
 
-Addresses fundamental limitations of basic string matching through custom Abstract Syntax Tree (AST) parsing:
+### Model Limitations
 
-**Key Improvements:**
-- **99.95% parsing success rate** across 101,446 varieties
-- **Maternal/paternal differentiation**: Tracks pod vs. pollen parent roles for sex-specific lineage analysis
-- **Multi-generational handling**: Resolves deeply nested crosses (e.g., `((A × B) × C) × (D × E)`)
-- **Ambiguity resolution**: Distinct identity assignment for 13,042 unknown entries + 26,858 seedling entries to prevent network collapse
-- **Network output**: 148,453 nodes, 200,583 directed edges with parental role attribution
-- **Intermediate nodes**: Creates 20,836 synthetic cross nodes to preserve full pedigree hierarchy
+- **Assumes linear trait inheritance**: Real genetics involves dominance, epistasis, and gene interactions
+- **Partner effects averaged out**: Measures general combining ability, not specific cross performance
+- **Historical vs. modern contexts**: Breeding practices and trait preferences have shifted over 260 years
 
-**Why Private**: The parsing algorithms and data structures represent potential intellectual property for future applications. Implementation details remain private for IP considerations.
+### Why Branches/Bud Count Failed
 
-**Access**: Full implementation available to potential employers upon request during interview processes.
+The negative R² for these traits means the model performs *worse than predicting the mean*. Likely causes:
+1. **Data sparsity**: Only 53% of varieties have these traits recorded
+2. **Fewer parents with 10+ measured offspring**: Limits reliable BV estimation
+3. **Possibly more complex inheritance**: May require different modeling approaches
 
 ---
 
-#### Notebook 07: Hierarchical Bayesian Breeding Value Estimation (Public)
+## Methodology Deep Dive
 
-Implements a Bayesian Animal Model using PyMC 5.x to estimate genetic merit (breeding values) across four horticultural traits: Scape Height, Bloom Size, Bud Count, and Branches.
+### Breeding Value Calculation
 
-**Model Architecture:**
+```python
+Breeding Value = (mean_offspring - population_mean) / population_std
+```
 
-$$Y = \mu + X\beta_{\text{environment}} + Za + \epsilon$$
+This gives a standardized effect size (like Cohen's d). A BV of +0.5 means offspring average 0.5 standard deviations above population mean.
 
-- **Hierarchical Bayesian framework**: Decomposes phenotypic variation into genetic and environmental components
-- **MCMC sampling**: Non-centered parameterization ensures efficient convergence (R-hat ≈ 1.00)
-- **Fixed effects**: Accounts for Hybridizer (732 unique) and Region (36 unique) environmental influences
-- **Genetic effects**: Simultaneous estimation of 3,627 unique parent breeding values
-- **Sparse data handling**: Student-t likelihood for traits with <25% completeness to reduce outlier influence
-- **Unknown Parent Groups (UPG)**: Temporal grouping by decade prevents artificial variance inflation from historical unknowns
+### Reliability Scoring
 
-**Quantitative Results:**
+Not all breeding values are equally trustworthy:
 
-| Trait | Completeness | Heritability (h²) | Predictive R | Interpretation |
-|-------|-------------|-------------------|--------------|----------------|
-| **Bloom Size** | 82.9% | 0.538 ± 0.029 | 0.472 | Strong genetic control - selection highly effective |
-| **Scape Height** | 99.7% | 0.345 ± 0.037 | 0.546 | Moderate heritability with strong predictability |
-| **Branches** | 21.9% | 0.073 ± 0.094 | 0.497 | Unreliable - data sparsity limits inference |
-| **Bud Count** | 22.1% | 0.106 ± 0.120 | 0.353 | Unreliable - data sparsity limits inference |
+```python
+reliability = statistical_confidence × sample_adequacy
+           = (1 - min(p_value, 0.5) × 2) × min(1, n_offspring/10)
+```
 
-**Community Contribution:**
-- Top 10 parents by breeding value published for each trait
-- Example top performers: **Kindly Light** (Bloom Size BV: 8.54), **Lola Branham** (Scape Height BV: 36.38)
-- Complete methodology documented for reproducibility
+- **Small samples** → lower reliability
+- **High p-values** → lower reliability
+- **n≥10 with p<0.05** → reliability approaches 1.0
 
-**Known Limitations:**
-- Data sparsity for Bud Count/Branches reduces heritability estimate reliability
-- A-matrix (additive relationship matrix) not yet implemented - would improve genetic covariance modeling
-- Current implementation represents best-practice Bayesian methods given data constraints
+### Weighted Breeding Value
+
+```python
+weighted_bv = breeding_value × reliability
+```
+
+This automatically downweights uncertain estimates in rankings.
+
+### Temporal Validation Strategy
+
+To test real-world predictive power:
+1. Calculate breeding values using only pre-2012 data
+2. For each post-2012 variety, predict trait from parent BVs
+3. Compare predictions to actual registered values
+4. Report R², correlation, MAE
+
+This simulates what happens when a breeder uses historical data to make decisions today.
 
 ---
 
 ## Key Findings
 
-### Data Quality & Structure (Phase 1)
+### Network Insights
 
-- **98%+ completeness** for core traits enables robust statistical analysis
-- **Clean temporal span** (1763-2024) supports comprehensive trend analysis
-- **Biological validation**: Branches and bud count correlation (0.61) confirms direct biological relationship
+- **Most influential historical parent**: Frances Fay (1957) with 32,839 total descendants
+- **Most prolific modern parent**: Ed Brown with 488 direct children
+- **Network density**: 0.000024 (sparse, confirming strategic rather than random breeding)
 
-### Breeding Network Insights (Phase 1)
+### Community Trends
 
-The analysis revealed that 1950s-1960s varieties dominate descendant counts not due to superior genetics, but because they represent the **foundation era** when systematic pedigree recording began. These early-recorded varieties had the longest time to infiltrate the breeding network, creating an artifact of documentation timing rather than genetic superiority.
+- **Peak growth era**: 2000s with 1,141 new hybridizers entering
+- **Current decline**: Net loss of 597 hybridizers in 2020s (1,067 exits vs 470 entries)
+- **Productivity gains**: Modern hybridizers show 22-24% higher output than historical cohorts
+- **Elite concentration**: Only 4.1% of hybridizers (219 individuals) have registered 100+ varieties
 
-**Network Structure:**
-- Low density confirms strategic parent selection rather than random crossing
-- Multiple centrality measures provide different perspectives on breeding influence
-- Hierarchical breeding line structures with clear genetic connectors identified
+### Trait Evolution (1950-2024)
 
-### Community Evolution (Phase 1)
-
-- **Peak Growth**: 2000s with 1,100+ new hybridizers
-- **Current Decline**: 600 hybridizer net loss in 2020s  
-- **Productivity Gains**: 22-24% efficiency increase among surviving hybridizers
-- **Professionalization**: Transition from widespread hobby to specialized craft
-
-### Regional Patterns (Phase 1)
-
-Complete coverage across 15 ADS regions enables future climate adaptation and geographic breeding optimization studies.
-
----
-
-### Pedigree Network Quality (Phase 2)
-
-- **79,629 varieties** parsed into complete pedigree structures
-- **Top genetic contributors** quantified: Ed Brown (489 offspring), Ida's Magic (466), J.T. Davis (368)
-- **Gender-specific tracing**: Pod/pollen parent differentiation enables maternal vs. paternal lineage analysis
-- **Complex cross resolution**: Multi-generational breeding strategies accurately captured
-
-### Quantitative Genetics Analysis (Phase 2)
-
-#### Heritability Estimates
-
-The Bayesian Animal Model successfully partitioned genetic and environmental variance:
-- **Bloom Size**: Highest heritability (h² = 0.54) confirms strong genetic control - selective breeding for this trait is highly effective
-- **Scape Height**: Moderate heritability (h² = 0.35) with excellent predictive performance suggests both genetic and management factors contribute
-- **Branches/Bud Count**: Low heritability estimates likely due to data sparsity rather than true biological patterns
-
-#### Breeding Value Validation
-
-Hold-out validation (2012+ varieties) demonstrates model predictive capability:
-- Correlation between predicted and observed values ranges 0.35-0.55 across traits
-- Strong performance despite sparse data confirms robust statistical framework
-- Top-ranked parents identified with statistical confidence intervals
-
-#### Methodological Insights
-
-- **Unknown Parent Grouping**: Temporal UPG strategy successfully prevented genetic variance inflation
-- **Student-t Likelihood**: Essential for sparse traits - stabilized variance estimates despite <25% data completeness
-- **MCMC Convergence**: Non-centered parameterization achieved excellent diagnostics across 3,627 genetic parameters
-
----
-
-## Impact & Applications
-
-### For Data Scientists & Employers
-
-- **Advanced Data Engineering**: Custom AST parser solving difficult data normalization challenges
-- **Bayesian Statistical Modeling**: Hierarchical Animal Model with PyMC - demonstrates theoretical understanding and practical MCMC implementation
-- **Sparse Data Techniques**: Student-t likelihood, Unknown Parent Grouping, non-centered parameterization
-- **Quantitative Genetics**: Heritability estimation, breeding value prediction, variance decomposition
-- **End-to-End Pipeline**: Data acquisition → cleaning → relationship extraction → statistical inference
-- **Technical Rigor**: Honest limitation acknowledgment and validation frameworks
-
-### For Plant Breeders & Geneticists
-
-- **Breeding Value Rankings**: Top 10 parents by trait with statistical confidence intervals
-- **Genetic vs. Environmental**: Quantified heritability reveals which traits respond to selection
-- **Parent Selection Tool**: Breeding values enable prediction of offspring genetic potential
-- **Evidence-Based Strategy**: Replace intuition with statistically rigorous genetic merit assessment
-
-### For the Daylily Community
-
-- **First Quantitative Genetic Analysis**: Pioneering application of Animal Models to ornamental horticulture
-- **Actionable Results**: Top performers immediately usable for breeding decisions
-- **Open Methodology**: Bayesian framework documented for community adoption and refinement
-- **Data-Driven Culture**: Establishes foundation for evidence-based breeding practices
-
----
-
-## Future Research Directions
-
-### Statistical Model Enhancements
-
-- **A-Matrix Integration**: Implement additive relationship matrix to properly model genetic covariance structure and improve breeding value accuracy
-- **Multi-trait Models**: Simultaneous estimation across correlated traits for genetic correlation insights
-- **Genomic Selection**: Integration with molecular marker data (future data collection)
-
-### Data Quality Improvements
-
-- **Trait Standardization**: Develop protocols for consistent measurement across regions
-- **Dimensional Expansion**: Identify and document traits not previously recorded for genetic gain beyond current registration fields
-- **Performance Metrics**: Systematic disease resistance and climate adaptation data collection
-- **Validation Framework**: Field trial validation of breeding value predictions
-
-### Analytical Extensions
-
-- **Genetic Trend Analysis**: Quantify selection pressure and genetic gain over decades
-- **Inbreeding Monitoring**: Pedigree-based inbreeding coefficients for diversity management  
-- **Cross-Validation**: Regional hold-out sets to assess geographic generalization
-- **Dominance Effects**: Expand from additive to additive + dominance genetic models (requires larger datasets)
-
----
-
-## Project Setup
-
-### Prerequisites
-
-- Python 3.8+ 
-- Jupyter Notebook/Lab
-- SQLite3
-
-### Installation
-
-1. **Clone the repository**
-```bash
-git clone https://github.com/drowsy-1/Daylily-Analytics.git
-cd Daylily-Analytics
-```
-
-2. **Set up Python environment**  
-It's recommended to use a virtual environment:
-```bash
-python -m venv venv
-source venv/bin/activate  # On Windows: venv\Scripts\activate
-```
-
-3. **Install dependencies**
-```bash
-pip install -r requirements.txt
-```
-
-### Running the Notebooks
-
-After activating your virtual environment, start Jupyter:
-```bash
-jupyter notebook
-```
-
-Your browser will open automatically. If not, copy the URL shown in your terminal.
-
-#### Notebook Execution Order
-
-**Phase 1 (Complete Pipeline - Runnable):**
-1. `01_data_exploration.ipynb` - Data quality assessment and cleaning
-2. `02_hybridizer_analysis.ipynb` - Career trajectory and community trends
-3. `03_network_analysis.ipynb` - Basic breeding relationship networks
-4. `04_regional_data.ipynb` - Geographic pattern integration
-5. `05_merge.ipynb` - Master database construction
-
-**Phase 2 (Advanced Analysis):**
-6. `06_pedigree_reconstruction` - Advanced AST parsing (not included in repository)
-7. `07_breeding_values.ipynb` - Hierarchical Bayesian BV estimation ✓
-
-**Important Notes:**
-- Notebooks 01-05 can be run sequentially without dependencies on Phase 2
-- Notebook 06 is a prerequisite for 07 but is not included in the public repository for IP considerations
-- To run 07 independently, the enhanced pedigree network data from 06 is required
-- Full codebase available to potential employers upon request
-
----
-
-## Troubleshooting
-
-If you encounter any issues:
-- Ensure all dependencies are installed correctly: `pip install -r requirements.txt`
-- Verify you're using Python 3.8+
-- Try restarting the Jupyter kernel if you encounter memory issues
-- Make sure to run all cells in each notebook in sequence
-- For Phase 2 questions, note that Notebook 06 outputs are required for 07
-
----
-
-## Repository Structure & Access
-
-### Project Structure
-
-```
-Daylily-Analytics/
-├── 01_data_exploration.ipynb      # EDA and data cleaning
-├── 02_hybridizer_analysis.ipynb   # Career pattern analysis  
-├── 03_network_analysis.ipynb      # Basic breeding networks
-├── 04_regional_data.ipynb         # Geographic analysis
-├── 05_merge.ipynb                 # Master database integration
-├── 06_pedigree_reconstruction     # Advanced AST parsing (private)
-├── 07_breeding_values.ipynb       # Bayesian BV estimation ✓
-├── daylilies.db/                  # SQLite database
-│   ├── master_daylily             # Final integrated dataset
-│   ├── daylilies                  
-│   ├── location_data
-│   ├── network_influences_metrics
-│   └── parent_child_relationships
-├── README.md                      # This documentation
-├── regional_data.xlsx             # ADS regional information
-└── requirements.txt               # Project dependencies
-```
-
-**Note:** Brackets indicate proprietary notebooks/data not included in public repository.
-
-### Public Components
-
-- **Data pipeline** (Notebooks 01-05): Complete data processing workflow from raw data to master database
-- **Breeding value methodology** (Notebook 07): Bayesian implementation, model architecture, and top results
-- **Documentation**: All analysis documentation and setup instructions
-- **Database schema**: SQLite structure and table relationships
-
-### Private Components
-
-- **Advanced pedigree reconstruction algorithms** (Notebook 06)
-- **Complete breeding value datasets**: Full parent rankings and predictions
-- **Source data files**: Original scraped database and intermediate derivatives
-
-**Rationale**: Advanced algorithms and complete datasets remain private for potential intellectual property considerations. Full codebase available to employers upon request during interview processes.
-
-**Contact**: Available for discussion regarding employment opportunities or research collaboration.
-
----
-
-## Current Status & Limitations
-
-### Phase 1 (Complete)
-- ✅ Data pipeline operational and documented
-- ✅ Network analysis and regional integration complete
-- ✅ Master database with 101,446 varieties ready for analysis
-
-### Phase 2 (Functional with Known Limitations)
-- ✅ Advanced pedigree reconstruction implemented (99.95% accuracy)
-- ✅ Bayesian breeding value framework operational
-- ⚠️ **Accuracy constraints**: Data sparsity limits prediction quality for some traits
-- 📋 **Planned enhancement**: A-matrix integration to improve genetic covariance modeling
-
-### Known Technical Limitations
-
-**Data Quality:**
-- Some traits have insufficient observations for robust prediction (Bud Count: 22.1%, Branches: 21.9%)
-- Missing performance data for disease resistance and variety performance across regions
-- Measurment protocols vary across time and between hybridizers 
-
-**Statistical Model:**
-- A-matrix (additive relationship matrix) not yet implemented
-- Current BV estimates lack full genetic covariance structure correction
-- Heritability estimates for sparse traits have wide confidence intervals
-
-**Relationship Extraction:**
-- 99.95% accuracy achieved, 53 edge cases remain unparsed
-- Complex parentage (13+ parents) presents biological impossibilities requiring manual review
-
-### Planned Improvements
-
-- **A-Matrix Implementation**: Proper genetic covariance structure for improved BV accuracy (primary next step)
-- **Data Collection Enhancement**: Expand trait coverage and measurement consistency
-- **Validation Framework**: Cross-validation against field performance data
-- **Multi-trait Models**: Correlated trait analysis for genetic correlations
-
----
-
-## Data Structure
-
-### Master Daylily Table (Post-Processing)
-
-Total Records: 101,446
-
-| Column Name | Data Type | Completeness | Description |
-|-------------|-----------|--------------|-------------|
-| url | string | 100.00% | ADS database URL |
-| name | string | 100.00% | Variety name |
-| hybridizer | string | 99.99% | Registrant/breeder |
-| year | integer | 100.00% | Registration year |
-| scape_height | float | 99.64% | Height in inches |
-| bloom_size | float | 92.20% | Diameter in inches |
-| bloom_season | string | 99.23% | Flowering period |
-| ploidy | string | 98.27% | Diploid/Tetraploid |
-| foliage_type | string | 97.73% | Evergreen/Dormant/Semi |
-| bud_count | float | 52.37% | Buds per scape |
-| branches | float | 52.47% | Branch count |
-| parentage | string | 78.55% | Parent variety names |
-| Region | float | 99.30% | ADS region code |
-| Direct_Children | float | 74.97% | Immediate offspring count |
-| Total_Descendants | float | 74.97% | All descendant count |
-| PageRank | float | 74.97% | Network influence score |
-| Betweenness_Centrality | float | 74.97% | Network bridging score |
-| parents | string | 68.59% | Parsed parent list |
-| children | string | 24.79% | Known offspring list |
+- **Tetraploid prevalence**: Rose from ~20% (1960) to ~60-70% (2024)
+- **Rebloom prevalence**: Increased from ~30% (1980s) to ~45-50% (2024)
+- **Bloom size**: Slight upward trend over decades
 
 ---
 
 ## Recommendations
 
-### For New Hybridizers
-- Study foundation varieties from systematic pedigree recording era (1950s-1960s)
-- Leverage breeding value rankings for strategic parent selection
-- Focus on high-heritability traits (Bloom Size: h² = 0.54) for effective selection
-- Plan for multi-year commitment with data-driven approaches from day one
+### For Breeders Using This Data
 
-### For Experienced Hybridizers  
-- Identify underutilized high-value parents using breeding value estimates
-- Evaluate long-term genetic contribution beyond immediate offspring success
-- Consider transmitting ability (TA = BV/2) when planning crosses
-- Integrate historical genetics with modern statistical methods
+1. **Prioritize bloom size and height selections** - these traits have validated predictive power
+2. **Look for reliability > 0.6** - parents with 10+ measured offspring
+3. **Consider multi-trait improvers** - rare but valuable (Linguini, Moonbeam, Stick Figure)
+4. **Validate with test crosses** - do 1-2 crosses before committing heavily
+5. **Treat as relative ranking** - not absolute prediction
 
-### For the Community
-- Enhance database collection for specialized traits and performance metrics
-- Implement collaborative breeding data sharing protocols
-- Develop standardized measurement protocols across regions
-- Support educational programs for statistical breeding methods
-- Leverage multi-disipline insights to make more effective practices and outcomes
+### For Hiring Managers Reviewing This Portfolio
+
+This project demonstrates:
+- **End-to-end pipeline development** from raw data to validated predictions
+- **Honest uncertainty quantification** - reliability scoring, validation, transparent limitations
+- **Domain expertise integration** - genetics concepts applied to practical breeding tools
+- **Production-quality code** - 10-minute runtime on laptop, modular functions, clear documentation
+- **Scientific rigor** - temporal validation, effect sizes, statistical significance
 
 ---
 
-## Project Significance
+## Getting Started
 
-This represents the first comprehensive quantitative genetic analysis of the American Daylily Society database. While ongoing enhancements (particularly A-matrix integration) will improve prediction accuracy, the current implementation provides actionable breeding intelligence through rigorous statistical methods.
+### Prerequisites
+- Python 3.8+
+- Jupyter Notebook/Lab
 
-**Key Contribution**: Transforms a horticultural database into a research-ready dataset with functioning breeding value prediction, demonstrating the power of combining modern data science techniques with traditional agricultural practices. The project provides a template for similar analyses in other plant breeding communities while advancing evidence-based breeding practices in ornamental horticulture.
+### Installation
+
+```bash
+git clone https://github.com/drowsy-1/Daylily-Analytics.git
+cd Daylily-Analytics
+python -m venv venv
+source venv/bin/activate  # Windows: venv\Scripts\activate
+pip install -r requirements.txt
+jupyter notebook
+```
+
+### Notebook Execution Order
+
+Run notebooks 01-05 sequentially to build the pipeline. Notebook 06 (breeding values) can run independently if data files are present.
+
+**Note**: Notebook 03_0 contains a simplified pedigree extraction. Full implementation available upon request.
 
 ---
 
-## License
+## Future Directions
 
-This project is available for portfolio review and educational purposes. Source code for public notebooks (01-05, 07) is provided under standard GitHub terms. Proprietary components (Notebook 06, complete datasets) are not included in this repository.
+- **Ploidy stratification**: Diploid and tetraploid inheritance patterns differ
+- **A-matrix implementation**: Additive relationship matrix for genetic covariance
+- **Interactive dashboard**: Let breeders explore data themselves
+- **Genomic selection**: If SNP data becomes available, GBLUP methods could improve accuracy
+
+---
+
+## Contact
+
+**Author**: Trinity Love
+**LinkedIn**: [linkedin.com/in/trinity-love-a551011b3](https://www.linkedin.com/in/trinity-love-a551011b3)
+**Repository**: [github.com/drowsy-1/Daylily-Analytics](https://github.com/drowsy-1/Daylily-Analytics)
+
+*Full codebase including proprietary components available to potential employers upon request.*
 
 ---
 
 ## Acknowledgments
 
-- American Daylily Society for maintaining the comprehensive variety database
+- American Daylily Society for maintaining the variety database
 - The daylily breeding community for decades of meticulous record-keeping
-- PyMC development team for excellent Bayesian modeling tools
-
----
-
-**Author**: Trinity Love  
-**Contact**: www.linkedin.com/in/trinity-love-a551011b3
-**Repository**: https://github.com/drowsy-1/Daylily-Analytics

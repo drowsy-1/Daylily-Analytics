@@ -1,6 +1,6 @@
 # Ignore all directories
-data/                     
-output/                   
+data/    
+output/                                  
 __pycache__/              
 .ipynb_checkpoints/       
 future/

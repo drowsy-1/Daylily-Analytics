@@ -26,7 +26,7 @@ With 100,000+ registered daylily varieties, hybridizers face an overwhelming sel
 
 ---
 
-## What I Built
+## What Was Built
 
 ### End-to-End Data Pipeline
 
@@ -37,7 +37,7 @@ Data Cleaning & Validation (Notebook 01)
     ↓
 Exploratory Analysis (Notebooks 02, 02.5)
     ↓
-Pedigree Network Extraction (Notebook 03_0) ← Proprietary algorithm
+Pedigree Network Extraction (Notebook 03_0)
     ↓
 Network Influence Metrics (Notebook 03)
     ↓
@@ -170,7 +170,7 @@ A1_DataSci_Portfolio/
 
 ## Limitations & Honest Assessment
 
-### What's Not Included (IP Considerations)
+### What's Not Included
 
 **Pedigree Parsing Algorithm**: Notebook `03_0_network_extraction.ipynb` contains a simplified version. The full AST-based parser that achieves 99.95% accuracy on complex nested pedigrees like `((A × B) × C) × (D × E)` is proprietary. The algorithm:
 - Handles 13,042 "unknown" entries with unique identity assignment
